@@ -1,9 +1,9 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import Vue from 'vue';
+import Vuex from 'vuex';
 // 引入 mutations
-import mutations from "./mutations";
+import mutations from './mutations';
 // 引入 actions
-import actions from "./actions";
+import actions from './actions';
 
 Vue.use(Vuex);
 

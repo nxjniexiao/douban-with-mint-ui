@@ -1,15 +1,16 @@
-<template></template>
+<template>
+  <div></div>
+</template>
 
 <script>
 export default {
-  name: "AuthRoute",
+  name: 'AuthRoute',
   mounted() {
-    console.log("authroute mounted");
+    console.log('authroute mounted');
     const currPath = this.$router.history.current.path;
-    if (currPath === "/") {
-      this.$router.push("/home");
+    if (currPath === '/') {
+      this.$router.push('/home');
     }
   }
 };
 </script>
-
