@@ -1,22 +1,17 @@
 <template>
   <div id="app">
+    <AuthRoute></AuthRoute>
     <router-view/>
   </div>
 </template>
 
 <script>
+import AuthRoute from "./components/AuthRoute/AuthRoute";
 export default {
-  name: 'App'
-}
+  name: "App",
+  components: { AuthRoute }
+};
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
