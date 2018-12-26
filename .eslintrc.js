@@ -26,10 +26,11 @@ module.exports = {
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // 末尾使用分号
-    semi: ['error', 'always'],
+    'semi': ['error', 'always'],
     // 单引号
-    quotes: ['error', 'single'],
+    'quotes': ['error', 'single'],
     // 函数左圆括号前不加空格
-    'space-before-function-paren': ['error', 'never']
+    'space-before-function-paren': ['error', 'never'],
+    'no-unused-vars': 'warn'
   }
 };

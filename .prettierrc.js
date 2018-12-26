@@ -5,4 +5,5 @@ module.exports = {
   tabWidth: 2,
   // 单引号
   singleQuote: true,
+  bracketSpacing: true
 };

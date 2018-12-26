@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import AuthRoute from './components/AuthRoute/AuthRoute';
+import AuthRoute from './components/auth-route/AuthRoute';
 export default {
   name: 'App',
   components: { AuthRoute }
