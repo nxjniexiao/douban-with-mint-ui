@@ -31,6 +31,7 @@ module.exports = {
     'quotes': ['error', 'single'],
     // 函数左圆括号前不加空格
     'space-before-function-paren': ['error', 'never'],
-    'no-unused-vars': 'warn'
+    'no-unused-vars': 'warn',
+    'indent': 'warn'
   }
 };

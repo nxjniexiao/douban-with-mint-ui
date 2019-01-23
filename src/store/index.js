@@ -1,68 +1,41 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-// 引入 mutations
-import mutations from './mutations';
-// 引入 actions
 import actions from './actions';
+import movie from '@/store/state.movie/state.movie';
+import music from '@/store/state.music/state.music';
+import book from '@/store/state.book/state.book';
+import menuData from '@/store/state.menuData/state.menuData';
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-  state: {
-    movie: {
-      byIds: {},
-      allIds: [],
-      byClasses: {}
-    },
-    music: {
-      byIds: {},
-      allIds: [],
-      byClasses: {}
-    },
-    book: {
-      byIds: {},
-      allIds: [],
-      byClasses: {}
-    },
-    menuData: {
-      currMenuKeyName: '', // 'movie'
-      currSubmenuObj: '',
-      menus: [
-        {
-          title: '电影',
-          keyName: 'movie',
-          submenus: [
-            { title: '正在热映', keyName: 'in_theaters' },
-            { title: '即将上映', keyName: 'coming_soon' },
-            { title: '高分电影', keyName: 'top250' }
-          ]
-        },
-        {
-          title: '音乐',
-          keyName: 'music',
-          submenus: [
-            { title: '华语', keyName: 'china' },
-            { title: '欧美', keyName: 'europeUS' },
-            { title: '粤语', keyName: 'cantonese' },
-            { title: '韩语', keyName: 'korean' },
-            { title: '日语', keyName: 'japan' }
-          ]
-        },
-        {
-          title: '图书',
-          keyName: 'book',
-          submenus: [
-            { title: '小说', keyName: 'novel' },
-            { title: '文学', keyName: 'literature' },
-            { title: '历史', keyName: 'history' },
-            { title: '随笔', keyName: 'essay' },
-            { title: '漫画', keyName: 'comic' }
-          ]
-        }
-      ]
-    }
+  modules: {
+    movie,
+    music,
+    book,
+    menuData
   },
-  mutations,
-  actions
+  actions,
+  // 从 store 中的 state 中派生出一些状态
+  getters: {
+    // 与当前一级标题对应的所有二级标题
+    currSubmenus: state => {
+      const currMenuKeyName = state.menuData.currMenuKeyName;
+      const menus = state.menuData.menus;
+      for (let i = 0, len = menus.length; i < len; i++) {
+        const menu = menus[i];
+        if (menu.keyName === currMenuKeyName) {
+          return menu.submenus;
+        }
+      }
+    },
+    // 当前一级标题的当前二级标题
+    selectedSubmenuKeyName: state => {
+      const currMenuKeyName = state.menuData.currMenuKeyName;
+      const currSubmenuObj = state.menuData.currSubmenuObj;
+      return currSubmenuObj[currMenuKeyName];
+    }
+  }
 });
+
 export default store;

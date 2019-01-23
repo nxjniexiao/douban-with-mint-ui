@@ -48,15 +48,15 @@ export default {
     if (currUrl === '/home') {
       this.$router.push('/home/movie');
     }
-    // 获取数据
-    this.fetchData({className: 'movie', subClassName: 'in_theaters'});
+    // // 获取数据
+    // this.fetchData({className: 'movie', subClassName: 'in_theaters'});
   },
   methods: {
     ...mapActions({
-      fetchData: 'fetchData'
+      // fetchData: 'fetchData'
     }),
     ...mapMutations({
-      //
+      SELECT_MENU: 'SELECT_MENU'
     })
   },
   computed: {
@@ -86,6 +86,7 @@ export default {
   watch: {
     selectedTabId: function(id) {
       this.$router.push(`/home/${id}`);
+      this.SELECT_MENU({menuKeyName: id});
     }
   }
 };
