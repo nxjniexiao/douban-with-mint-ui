@@ -11,7 +11,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      fetchData: 'fetchData'
+      fetchDataIfNeeded: 'fetchDataIfNeeded'
     })
   },
   computed: {
@@ -23,7 +23,7 @@ export default {
     })
   },
   created() {
-    this.fetchData();
+    this.fetchDataIfNeeded();
   }
 };
 </script>

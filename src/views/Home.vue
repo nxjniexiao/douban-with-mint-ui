@@ -49,11 +49,11 @@ export default {
       this.$router.push('/home/movie');
     }
     // // 获取数据
-    // this.fetchData({className: 'movie', subClassName: 'in_theaters'});
+    // this.fetchDataIfNeeded({className: 'movie', subClassName: 'in_theaters'});
   },
   methods: {
     ...mapActions({
-      // fetchData: 'fetchData'
+      // fetchDataIfNeeded: 'fetchDataIfNeeded'
     }),
     ...mapMutations({
       SELECT_MENU: 'SELECT_MENU'

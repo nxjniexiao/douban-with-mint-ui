@@ -33,7 +33,7 @@ const store = new Vuex.Store({
     selectedSubmenuKeyName: state => {
       const currMenuKeyName = state.menuData.currMenuKeyName;
       const currSubmenuObj = state.menuData.currSubmenuObj;
-      return currSubmenuObj[currMenuKeyName];
+      return currSubmenuObj[currMenuKeyName].keyName;
     }
   }
 });

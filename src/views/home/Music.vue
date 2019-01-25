@@ -4,7 +4,7 @@
       <mt-tab-item
         v-for="submenu in currSubmenus"
         :id="submenu.keyName"
-        :key="submenu.keyName" @click.native="selectSubmenu(submenu.keyName)">{{submenu.title}}</mt-tab-item>
+        :key="submenu.keyName" @click.native="selectSubmenu(submenu)">{{submenu.title}}</mt-tab-item>
     </mt-navbar>
     Music
   </div>
@@ -21,13 +21,14 @@ export default {
   },
   methods: {
     ...mapActions({
-      fetchData: 'fetchData'
+      fetchDataIfNeeded: 'fetchDataIfNeeded'
     }),
     ...mapMutations({
       SELECT_SUBMENU: 'SELECT_SUBMENU'
     }),
-    selectSubmenu(submenuKeyName) {
-      this.SELECT_SUBMENU({submenuKeyName: submenuKeyName});
+    selectSubmenu(submenu) {
+      this.SELECT_SUBMENU({submenu});
+      this.fetchDataIfNeeded();
     }
   },
   computed: {
@@ -40,7 +41,7 @@ export default {
     })
   },
   created() {
-    this.fetchData();
+    this.fetchDataIfNeeded();
     this.selectedKeyName = this.selectedSubmenuKeyName;
   }
 };

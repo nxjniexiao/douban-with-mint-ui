@@ -9,17 +9,17 @@ const mutations = {
   // 选择二级标题
   [SELECT_SUBMENU](state, payload) {
     const currMenuKeyName = state.currMenuKeyName;
-    const {submenuKeyName} = payload;
-    state.currSubmenuObj = {...state.currSubmenuObj, [currMenuKeyName]: submenuKeyName};
+    const {submenu} = payload;
+    state.currSubmenuObj = {...state.currSubmenuObj, [currMenuKeyName]: submenu};
   }
 };
 export const menuData = {
   state: {
     currMenuKeyName: 'movie', // 'movie'
     currSubmenuObj: {
-      movie: 'in_theaters',
-      music: 'china',
-      book: 'novel'
+      movie: {title: '正在热映', keyName: 'in_theaters'},
+      music: {title: '华语', keyName: 'china'},
+      book: {title: '小说', keyName: 'novel'}
     },
     menus: [
       {

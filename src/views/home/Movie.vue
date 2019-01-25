@@ -21,13 +21,14 @@ export default {
   components: {},
   methods: {
     ...mapActions({
-      fetchData: 'fetchData'
+      fetchDataIfNeeded: 'fetchDataIfNeeded'
     }),
     ...mapMutations({
       SELECT_SUBMENU: 'SELECT_SUBMENU'
     }),
     selectSubmenu(submenuKeyName) {
       this.SELECT_SUBMENU({submenuKeyName: submenuKeyName});
+      this.fetchDataIfNeeded();
     }
   },
   computed: {
@@ -40,7 +41,7 @@ export default {
     })
   },
   created() {
-    this.fetchData();
+    this.fetchDataIfNeeded();
     this.selectedKeyName = this.selectedSubmenuKeyName;
   }
 };
