@@ -10,6 +10,8 @@ import 'mint-ui/lib/style.css';
 import store from './store';
 // 引入 Normalize.css
 import './common/css/normalize.css';
+// 引入图标字体
+import '@/common/fonts/icon.css';
 
 Vue.use(MintUI);
 

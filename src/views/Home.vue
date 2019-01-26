@@ -1,44 +1,60 @@
 <template>
   <div>
-    <mt-header :title="selectedTabName"></mt-header>
-    <router-view></router-view>
-    <mt-tabbar v-model="selectedTabId">
+    <!--header-->
+    <mt-header :title="selectedTabName" fixed></mt-header>
+    <mt-navbar class="nav-bar" v-model="selectedSubmenuKeyNameLocal">
       <mt-tab-item
-        v-for="(tab, index) in tabs"
+        v-for="submenu in currSubmenus"
+        :id="submenu.keyName"
+        :key="submenu.keyName" @click.native="selectSubmenu(submenu)">{{submenu.title}}</mt-tab-item>
+    </mt-navbar>
+    <!--content-->
+    <div class="content">
+      <mt-loadmore :bottom-method="loadBottom" ref="loadmore" :auto-fill="false">
+        <!--<router-view></router-view>-->
+        <Grid></Grid>
+      </mt-loadmore>
+    </div>
+    <!--footer-->
+    <mt-tabbar v-model="selectedTabId" fixed>
+      <mt-tab-item
+        v-for="tab in tabs"
         :key="tab.tabId"
-        :id="tab.tabId"
-      >
-        <img slot="icon" :src="tabsImgSrc[index]" /> {{ tab.tabName }}
+        :id="tab.tabId">
+        <i :class="tab.iconName" class="icon"></i>
+        <div>{{ tab.tabName }}</div>
       </mt-tab-item>
     </mt-tabbar>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex';
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
+import Grid from '@/components/grid/Grid';
 export default {
   name: 'Home',
+  components: {
+    Grid
+  },
   data() {
     return {
       selectedTabId: 'movie',
+      selectedSubmenuKeyNameLocal: '',
       tabs: [
         {
           tabId: 'movie',
           tabName: '电影',
-          imgSrc: require('../assets/movies.png'),
-          selectedImgSrc: require('../assets/movies-active.png')
+          iconName: 'icon-film'
         },
         {
           tabId: 'music',
           tabName: '音乐',
-          imgSrc: require('../assets/music.png'),
-          selectedImgSrc: require('../assets/music-active.png')
+          iconName: 'icon-music'
         },
         {
           tabId: 'book',
           tabName: '图书',
-          imgSrc: require('../assets/books.png'),
-          selectedImgSrc: require('../assets/books-active.png')
+          iconName: 'icon-book'
         }
       ]
     };
@@ -48,18 +64,34 @@ export default {
     if (currUrl === '/home') {
       this.$router.push('/home/movie');
     }
-    // // 获取数据
-    // this.fetchDataIfNeeded({className: 'movie', subClassName: 'in_theaters'});
+    // 获取数据
+    this.fetchDataIfNeeded();
+    this.selectedSubmenuKeyNameLocal = this.selectedSubmenuKeyName;
   },
   methods: {
     ...mapActions({
-      // fetchDataIfNeeded: 'fetchDataIfNeeded'
+      fetchDataIfNeeded: 'fetchDataIfNeeded'
     }),
     ...mapMutations({
-      SELECT_MENU: 'SELECT_MENU'
-    })
+      SELECT_MENU: 'SELECT_MENU',
+      SELECT_SUBMENU: 'SELECT_SUBMENU'
+    }),
+    // 选择二级标题
+    selectSubmenu(submenu) {
+      this.SELECT_SUBMENU({submenu});
+      this.fetchDataIfNeeded();
+    },
+    // 上拉加载更多
+    loadBottom() {
+      console.log('load bottom');
+      this.$refs.loadmore.onBottomLoaded();
+    }
   },
   computed: {
+    ...mapGetters({
+      currSubmenus: 'currSubmenus',
+      selectedSubmenuKeyName: 'selectedSubmenuKeyName'
+    }),
     selectedTabName() {
       const tabs = this.tabs;
       const selectedTabId = this.selectedTabId;
@@ -87,10 +119,37 @@ export default {
     selectedTabId: function(id) {
       this.$router.push(`/home/${id}`);
       this.SELECT_MENU({menuKeyName: id});
+      this.fetchDataIfNeeded();
+    },
+    selectedSubmenuKeyName: function(keyName) {
+      this.selectedSubmenuKeyNameLocal = keyName;
     }
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+  .nav-bar {
+    position: fixed;
+    top: 40px;
+    width: 100%;
+  }
+  .icon {
+    display: block;
+    font-size: 25px;
+    margin-bottom: 5px;
+    color: #8c8c8c;
+  }
+  .mint-tab-item.is-selected .icon {
+    color: #26a2ff
+  }
+  .content {
+    position: fixed;
+    width: 100%;
+    top: 88px;
+    bottom: 56px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* 解决移动端滑动不流畅的问题 */
+  }
+</style>

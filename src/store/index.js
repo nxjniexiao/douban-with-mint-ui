@@ -34,6 +34,17 @@ const store = new Vuex.Store({
       const currMenuKeyName = state.menuData.currMenuKeyName;
       const currSubmenuObj = state.menuData.currSubmenuObj;
       return currSubmenuObj[currMenuKeyName].keyName;
+    },
+    // 根据当前一级、二级标题筛选出要显示的数据
+    currDataByClasses: (state, getters) => {
+      const currMenuKeyName = state.menuData.currMenuKeyName;
+      const currSubmenuKeyName = getters.selectedSubmenuKeyName;
+      return state[currMenuKeyName].byClasses[currSubmenuKeyName] || [];// 防止初始化时返回 undefined
+    },
+    // 根据当前一级、二级标题筛选出要显示的分类数据
+    currDataByIds: state => {
+      const currMenuKeyName = state.menuData.currMenuKeyName;
+      return state[currMenuKeyName].byIds;
     }
   }
 });

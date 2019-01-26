@@ -1,3 +1,4 @@
+import { Indicator, Toast } from 'mint-ui';
 import {
   getMoviesList,
   getMusicList,
@@ -21,6 +22,7 @@ const actions = {
       // let url = baseUrl + currMenuKeyName + '/' + currSubmenuKeyName;
       let url = getUrl(currMenuKeyName, currSubmenu);
       url = createUrlWithOpt(url, 0, 20);
+      Indicator.open('加载中');
       return fetchDataFunctions[currMenuKeyName](url).then(res => {
         commit({
           type: LOAD_DATA,
@@ -28,6 +30,11 @@ const actions = {
           currSubmenuKeyName,
           res
         });
+        Indicator.close();
+      }).catch(err => {
+        console.log(err);
+        Indicator.close();
+        Toast('加载失败');
       });
     }
   }

@@ -9,7 +9,7 @@ export default {
     // console.log('authroute mounted');
     const currPath = this.$router.history.current.path;
     if (currPath === '/') {
-      this.$router.push('/home');
+      this.$router.push('/home/movie');
     }
   }
 };
